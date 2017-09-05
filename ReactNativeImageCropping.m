@@ -6,21 +6,21 @@
 
 @property (nonatomic, strong) RCTPromiseRejectBlock _reject;
 @property (nonatomic, strong) RCTPromiseResolveBlock _resolve;
-@property TOCropViewControllerAspectRatio aspectRatio;
+@property TOCropViewControllerAspectRatioPreset aspectRatio;
 
 
 @end
 
 @implementation RCTConvert (AspectRatio)
-RCT_ENUM_CONVERTER(TOCropViewControllerAspectRatio, (@{
-            @"AspectRatioOriginal" : @(TOCropViewControllerAspectRatioOriginal),
-              @"AspectRatioSquare" : @(TOCropViewControllerAspectRatioSquare),
-                 @"AspectRatio3x2" : @(TOCropViewControllerAspectRatio3x2),
-                 @"AspectRatio5x3" : @(TOCropViewControllerAspectRatio5x3),
-                 @"AspectRatio4x3" : @(TOCropViewControllerAspectRatio4x3),
-                 @"AspectRatio5x4" : @(TOCropViewControllerAspectRatio5x4),
-                 @"AspectRatio7x5" : @(TOCropViewControllerAspectRatio7x5),
-                @"AspectRatio16x9" : @(TOCropViewControllerAspectRatio16x9)
+RCT_ENUM_CONVERTER(TOCropViewControllerAspectRatioPreset, (@{
+            @"AspectRatioOriginal" : @(TOCropViewControllerAspectRatioPresetOriginal),
+              @"AspectRatioSquare" : @(TOCropViewControllerAspectRatioPresetSquare),
+                 @"AspectRatio3x2" : @(TOCropViewControllerAspectRatioPreset3x2),
+                 @"AspectRatio5x3" : @(TOCropViewControllerAspectRatioPreset5x3),
+                 @"AspectRatio4x3" : @(TOCropViewControllerAspectRatioPreset4x3),
+                 @"AspectRatio5x4" : @(TOCropViewControllerAspectRatioPreset5x4),
+                 @"AspectRatio7x5" : @(TOCropViewControllerAspectRatioPreset7x5),
+                @"AspectRatio16x9" : @(TOCropViewControllerAspectRatioPreset16x9)
                 }), UIStatusBarAnimationNone, integerValue)
 @end
 
@@ -34,14 +34,14 @@ RCT_EXPORT_MODULE()
 - (NSDictionary *)constantsToExport
 {
     return @{
-   @"AspectRatioOriginal" : @(TOCropViewControllerAspectRatioOriginal),
-     @"AspectRatioSquare" : @(TOCropViewControllerAspectRatioSquare),
-        @"AspectRatio3x2" : @(TOCropViewControllerAspectRatio3x2),
-        @"AspectRatio5x3" : @(TOCropViewControllerAspectRatio5x3),
-        @"AspectRatio4x3" : @(TOCropViewControllerAspectRatio4x3),
-        @"AspectRatio5x4" : @(TOCropViewControllerAspectRatio5x4),
-        @"AspectRatio7x5" : @(TOCropViewControllerAspectRatio7x5),
-       @"AspectRatio16x9" : @(TOCropViewControllerAspectRatio16x9),
+   @"AspectRatioOriginal" : @(TOCropViewControllerAspectRatioPresetOriginal),
+     @"AspectRatioSquare" : @(TOCropViewControllerAspectRatioPresetSquare),
+        @"AspectRatio3x2" : @(TOCropViewControllerAspectRatioPreset3x2),
+        @"AspectRatio5x3" : @(TOCropViewControllerAspectRatioPreset5x3),
+        @"AspectRatio4x3" : @(TOCropViewControllerAspectRatioPreset4x3),
+        @"AspectRatio5x4" : @(TOCropViewControllerAspectRatioPreset5x4),
+        @"AspectRatio7x5" : @(TOCropViewControllerAspectRatioPreset7x5),
+       @"AspectRatio16x9" : @(TOCropViewControllerAspectRatioPreset16x9),
     };
 }
 
@@ -66,7 +66,7 @@ RCT_EXPORT_METHOD(  cropImageWithUrl:(NSString *)imageUrl
 }
 
 RCT_EXPORT_METHOD(cropImageWithUrlAndAspect:(NSString *)imageUrl
-                                aspectRatio:(TOCropViewControllerAspectRatio)aspectRatio
+                                aspectRatio:(TOCropViewControllerAspectRatioPreset)aspectRatio
                                    resolver:(RCTPromiseResolveBlock)resolve
                                    rejecter:(RCTPromiseRejectBlock)reject
         )
@@ -109,9 +109,11 @@ RCT_EXPORT_METHOD(cropImageWithUrlAndAspect:(NSString *)imageUrl
     cropViewController.delegate = self;
     
     if(self.aspectRatio) {
-        cropViewController.lockedAspectRatio = YES;
-        cropViewController.defaultAspectRatio = self.aspectRatio;
+        cropViewController.aspectRatioLockEnabled = YES;
+        //cropViewController.defaultAspectRatio = self.aspectRatio;
     }
+    cropViewController.aspectRatioPickerButtonHidden = YES;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [root presentViewController:cropViewController animated:YES completion:nil];
     });
