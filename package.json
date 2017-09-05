@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": "meznaric/react-native-image-cropping",
   "dependencies": {
-    "TOCropViewController": "FreiraumIO/TOCropViewController"
+    "tocropviewcontroller": "FreiraumIO/TOCropViewController#159313feb0cb75775f522e7c457664a22379b384"
   },
   "peerDependencies": {
     "react-native": ">=0.40.0"
