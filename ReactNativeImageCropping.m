@@ -110,7 +110,7 @@ RCT_EXPORT_METHOD(cropImageWithUrlAndAspect:(NSString *)imageUrl
     
     if(self.aspectRatio) {
         cropViewController.aspectRatioLockEnabled = YES;
-        //cropViewController.defaultAspectRatio = self.aspectRatio;
+        cropViewController.aspectRatioPreset = self.aspectRatio;
     }
     cropViewController.aspectRatioPickerButtonHidden = YES;
     
